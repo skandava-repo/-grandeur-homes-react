@@ -1,0 +1,231 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0.9rem 0;
+  transition: all 0.4s ease;
+}
+
+.nav.scrolled {
+  background: transparent;
+  backdrop-filter: none;
+  padding: 0.5rem 0;
+  box-shadow: none;
+}
+
+.nav.scrolled .logo-text,
+.nav.scrolled .nav-links a {
+  color: #1C6060;
+}
+
+.nav.scrolled .nav-links a:hover {
+  color: #2a8080;
+}
+
+.nav.scrolled .nav-links a::after {
+  background: #1C6060;
+}
+
+.nav-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.logo {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  position: relative;
+  top: 12px;
+}
+
+.logo-text-group {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #1C6060;
+  text-transform: uppercase;
+}
+
+.logo-tagline {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: #1C6060;
+  margin-top: 1px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 3rem;
+}
+
+.nav-links a {
+  color: #1C6060;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #1C6060;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #2a8080;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  width: 25px;
+  height: 2px;
+  background: var(--color-text-light);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 2rem;
+  }
+  
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    background: rgba(26, 29, 41, 0.98);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    padding: 6rem 2rem;
+    gap: 2rem;
+    transition: right 0.4s ease;
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+  
+  .nav-toggle {
+    display: flex;
+  }
+}
+
+/* JV PAGE THEME */
+.nav.jv-theme .logo-text,
+.nav.jv-theme .logo-tagline,
+.nav.jv-theme .nav-links a {
+  color: #8B7355;
+}
+
+.nav.jv-theme .nav-links a:hover {
+  color: #9C8468;
+}
+
+.nav.jv-theme .nav-links a::after {
+  background: #9C8468;
+}
+
+.nav.jv-theme.scrolled {
+  background: linear-gradient(to bottom, rgba(245, 240, 235, 1), rgba(245, 240, 235, 0.4));
+  backdrop-filter: blur(10px);
+}
+
+.nav.jv-theme.scrolled .logo-text,
+.nav.jv-theme.scrolled .logo-tagline,
+.nav.jv-theme.scrolled .nav-links a {
+  color: #6B5D4F;
+}
+
+.nav.jv-theme.scrolled .nav-links a:hover {
+  color: #8B7355;
+}
+
+.nav.jv-theme.scrolled .nav-links a::after {
+  background: #8B7355;
+}
+
+/* PROJECTS PAGE THEME - header matches the page body (Warm Ivory) */
+.nav.projects-theme .logo-text,
+.nav.projects-theme .logo-tagline,
+.nav.projects-theme .nav-links a {
+  color: #142536;
+}
+
+.nav.projects-theme .nav-links a:hover {
+  color: #a3812f;
+}
+
+.nav.projects-theme .nav-links a::after {
+  background: #C8A96B;
+}
+
+.nav.projects-theme.scrolled {
+  background: linear-gradient(to bottom, rgba(248, 246, 240, 0.97), rgba(248, 246, 240, 0.6));
+  backdrop-filter: blur(10px);
+}
+
+.nav.projects-theme.scrolled .logo-text,
+.nav.projects-theme.scrolled .logo-tagline,
+.nav.projects-theme.scrolled .nav-links a {
+  color: #142536;
+}
+
+.nav.projects-theme.scrolled .nav-links a:hover {
+  color: #a3812f;
+}
+
+.nav.projects-theme.scrolled .nav-links a::after {
+  background: #C8A96B;
+}
+
+.nav-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+}
