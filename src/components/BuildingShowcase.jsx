@@ -156,21 +156,53 @@ const BuildingShowcase = () => {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       time++
+
+      // Mobile: horizontal ribbons flowing left-to-right.
+      // Web/desktop: original vertical ribbons flowing bottom-to-top.
+      const horizontal = window.matchMedia('(max-width: 768px)').matches
+
       for (const r of ribbons) {
-        const baseX = canvas.width * r.xFrac
-        ctx.beginPath()
-        ctx.moveTo(baseX, 0)
-        for (let y = 0; y <= canvas.height; y += 4) {
-          const x = baseX +
-            Math.sin(y * 0.004 + time * r.speed + r.offset) * r.amplitude +
-            Math.sin(y * 0.008 + time * r.speed * 0.6) * r.amplitude * 0.4
-          ctx.lineTo(x, y)
+        if (horizontal) {
+          // Repeat the band down the full panel height (one set per viewport
+          // span) so every scrolled section keeps ribbons behind it.
+          const span = window.innerHeight
+          const bandThickness = r.amplitude * 1.6
+          for (let origin = 0; origin < canvas.height; origin += span) {
+            const baseY = origin + span * r.xFrac
+            ctx.beginPath()
+            ctx.moveTo(0, baseY)
+            for (let x = 0; x <= canvas.width; x += 4) {
+              const y = baseY +
+                Math.sin(x * 0.004 + time * r.speed + r.offset) * r.amplitude +
+                Math.sin(x * 0.008 + time * r.speed * 0.6) * r.amplitude * 0.4
+              ctx.lineTo(x, y)
+            }
+            // Close into a thin horizontal band rather than filling downward.
+            for (let x = canvas.width; x >= 0; x -= 4) {
+              const y = baseY + bandThickness +
+                Math.sin(x * 0.004 + time * r.speed + r.offset + 0.5) * r.amplitude * 0.5
+              ctx.lineTo(x, y)
+            }
+            ctx.closePath()
+            ctx.fillStyle = r.color
+            ctx.fill()
+          }
+        } else {
+          const baseX = canvas.width * r.xFrac
+          ctx.beginPath()
+          ctx.moveTo(baseX, 0)
+          for (let y = 0; y <= canvas.height; y += 4) {
+            const x = baseX +
+              Math.sin(y * 0.004 + time * r.speed + r.offset) * r.amplitude +
+              Math.sin(y * 0.008 + time * r.speed * 0.6) * r.amplitude * 0.4
+            ctx.lineTo(x, y)
+          }
+          ctx.lineTo(canvas.width, canvas.height)
+          ctx.lineTo(canvas.width, 0)
+          ctx.closePath()
+          ctx.fillStyle = r.color
+          ctx.fill()
         }
-        ctx.lineTo(canvas.width, canvas.height)
-        ctx.lineTo(canvas.width, 0)
-        ctx.closePath()
-        ctx.fillStyle = r.color
-        ctx.fill()
       }
       animId = requestAnimationFrame(draw)
     }

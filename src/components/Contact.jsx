@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import './Contact.css'
 
 const Contact = () => {
   const [status, setStatus] = useState('')
@@ -30,7 +31,7 @@ const Contact = () => {
       <div className="container">
         <h2 className="section-title center">Get In Touch</h2>
         <p className="section-subtitle">Let's discuss your next luxury project</p>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '6rem', marginTop: '4rem' }}>
+        <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '6rem', marginTop: '4rem' }}>
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -80 }}

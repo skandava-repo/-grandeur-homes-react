@@ -351,3 +351,17 @@
     height: 160px;
   }
 }
+
+@media (max-width: 480px) {
+  .tm {
+    padding: 48px 1.1rem;
+  }
+
+  .tm-container {
+    gap: 2rem;
+  }
+
+  .tm-drum {
+    height: 140px;
+  }
+}

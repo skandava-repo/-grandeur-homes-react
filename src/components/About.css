@@ -1,0 +1,27 @@
+/* Responsive overrides for About. Inline styles on the JSX set the desktop
+   layout, so these rules use !important to win over them on small screens. */
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+
+  .about-img {
+    height: 360px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-grid {
+    gap: 2rem !important;
+  }
+
+  .about-stats-grid {
+    gap: 1rem !important;
+  }
+
+  .about-img {
+    height: 260px !important;
+  }
+}

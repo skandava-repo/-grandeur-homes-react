@@ -1,0 +1,9 @@
+/* Mobile-only light background tint for the Leadership section. The desktop
+   background is set inline on the section, so this uses !important to win
+   over it, and only inside the mobile breakpoint. */
+
+@media (max-width: 768px) {
+  .leadership {
+    background: #F7FAFA !important;
+  }
+}

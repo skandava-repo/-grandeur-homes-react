@@ -1,0 +1,16 @@
+/* Responsive overrides for Footer. Inline styles set the desktop layout,
+   so these use !important to win over them on small screens. */
+
+@media (max-width: 480px) {
+  .footer-top {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    text-align: center !important;
+  }
+
+  .footer-links {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 1.2rem !important;
+  }
+}

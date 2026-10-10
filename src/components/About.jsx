@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
+import './About.css'
 
 const About = () => {
   return (
     <section className="about" id="about" style={{ background: 'var(--color-bg-dark)' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
+        <div className="about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -18,7 +19,7 @@ const About = () => {
             <p style={{ color: 'var(--color-text-cream)', fontSize: '1.1rem', lineHeight: 1.8 }}>
               We focus on what homebuyers truly need — strong RCC structures, quality fittings, on-time delivery, and transparent pricing. Every project is built with CMDA/DTCP approval and a commitment to giving families a home they can trust for generations.
             </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginTop: '2rem' }}>
+            <div className="about-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginTop: '2rem' }}>
               {[
                 { number: '15', label: 'Projects Completed' },
                 { number: '10+', label: 'Years Experience' },
@@ -37,7 +38,7 @@ const About = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <img src="/hero-5.png" alt="Grandeur Homes Project" style={{ width: '100%', height: '600px', objectFit: 'cover', borderRadius: '4px' }} />
+            <img src="/hero-5.png" alt="Grandeur Homes Project" className="about-img" style={{ width: '100%', height: '600px', objectFit: 'cover', borderRadius: '4px' }} />
           </motion.div>
         </div>
       </div>
