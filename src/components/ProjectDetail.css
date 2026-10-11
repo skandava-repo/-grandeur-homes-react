@@ -427,6 +427,62 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+.flats-sold-out {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: #faf8f5;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+}
+
+.flats-sold-out-icon {
+  font-size: 2.2rem;
+  color: #b8976b;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+
+.flats-sold-out-title {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin-bottom: 0.8rem;
+}
+
+.flats-sold-out-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #555;
+  max-width: 460px;
+  margin-bottom: 2rem;
+}
+
+.flats-sold-out-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+/* The shared .cta-secondary is styled for a dark background (white text);
+   recolor it for this light card so it is visible. */
+.flats-sold-out-actions .cta-secondary {
+  color: #6b5d4f;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.flats-sold-out-actions .cta-secondary:hover {
+  border-color: rgba(0, 0, 0, 0.45);
+  color: #1a1a1a;
+}
+
 .flats-table {
   width: 100%;
   border-collapse: collapse;
@@ -643,6 +699,12 @@
   .about-stats {
     flex-direction: column;
     gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-stat {
+    align-items: center;
   }
 
   .highlights-grid {
@@ -662,6 +724,26 @@
     font-size: 0.68rem;
   }
 
+  /* Let the 4-column flats table scroll horizontally instead of being
+     clipped by the wrapper's overflow:hidden, and tighten cell padding. */
+  .flats-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .flats-table {
+    min-width: 420px;
+  }
+
+  .flats-table thead th {
+    padding: 0.8rem 1rem;
+  }
+
+  .flats-table tbody td {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
   .cta-inner h3 {
     font-size: 1.5rem;
   }
@@ -672,11 +754,31 @@
     grid-template-columns: 1fr;
   }
 
+  .overview-location {
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+  }
+
   .highlights-grid {
     grid-template-columns: 1fr;
   }
 
   .detail-hero-overlay h1 {
     font-size: 2rem;
+  }
+
+  .flats-table {
+    min-width: 360px;
+  }
+
+  .flats-table thead th {
+    padding: 0.7rem 0.75rem;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+
+  .flats-table tbody td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.8rem;
   }
 }

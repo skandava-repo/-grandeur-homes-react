@@ -25,6 +25,30 @@ const projects = [
     ]
   },
   {
+    id: 5,
+    name: 'Grandeur Sri Sowbhagya',
+    location: '3rd Main Road, Nanganallur, Chennai',
+    type: '2 & 3 BHK',
+    status: 'Ongoing',
+    range: '675 - 1600 Sq.ft',
+    image: '/hero-10.png',
+    address: 'Grandeur Sri Sowbhagya, 3rd Main Road, Nanganallur, Chennai',
+    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1!2d80.19!3d12.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s3rd+Main+Road+Nanganallur+Chennai!5e0!3m2!1sen!2sin!4v1',
+    flats: [
+      { no: '#101', floor: 'First', builtUp: 770, uds: 297.04 },
+      { no: '#102', floor: 'First', builtUp: 675, uds: 260.4 },
+      { no: '#103', floor: 'First', builtUp: 775, uds: 298.97 },
+      { no: '#201', floor: 'Second', builtUp: 1548, uds: 597.17 },
+      { no: '#202', floor: 'Second', builtUp: 775, uds: 298.97 },
+      { no: '#301', floor: 'Third', builtUp: 1600, uds: 617.23 },
+      { no: '#302', floor: 'Third', builtUp: 723, uds: 278.91 },
+      { no: '#401', floor: 'Fourth', builtUp: 1293, uds: 498.85 },
+      { no: '#402', floor: 'Fourth', builtUp: 1030, uds: 397.34 },
+      { no: '#501', floor: 'Fifth', builtUp: 1422, uds: 548.54 },
+      { no: '#502', floor: 'Fifth', builtUp: 901, uds: 347.58 },
+    ]
+  },
+  {
     id: 2,
     name: 'Sai Aura',
     location: '49th Street, Nanganallur, Chennai',
@@ -81,30 +105,6 @@ const projects = [
       { no: '#102', floor: 'First', builtUp: 787, uds: 377.14 },
       { no: '#202', floor: 'Second', builtUp: 2064, uds: 989.08 },
       { no: '#301', floor: 'Third', builtUp: 2064, uds: 989.08 },
-    ]
-  },
-  {
-    id: 5,
-    name: 'Grandeur Sri Sowbhagya',
-    location: '3rd Main Road, Nanganallur, Chennai',
-    type: '2 & 3 BHK',
-    status: 'Ongoing',
-    range: '675 - 1600 Sq.ft',
-    image: '/hero-10.png',
-    address: 'Grandeur Sri Sowbhagya, 3rd Main Road, Nanganallur, Chennai',
-    mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.1!2d80.19!3d12.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s3rd+Main+Road+Nanganallur+Chennai!5e0!3m2!1sen!2sin!4v1',
-    flats: [
-      { no: '#101', floor: 'First', builtUp: 770, uds: 297.04 },
-      { no: '#102', floor: 'First', builtUp: 675, uds: 260.4 },
-      { no: '#103', floor: 'First', builtUp: 775, uds: 298.97 },
-      { no: '#201', floor: 'Second', builtUp: 1548, uds: 597.17 },
-      { no: '#202', floor: 'Second', builtUp: 775, uds: 298.97 },
-      { no: '#301', floor: 'Third', builtUp: 1600, uds: 617.23 },
-      { no: '#302', floor: 'Third', builtUp: 723, uds: 278.91 },
-      { no: '#401', floor: 'Fourth', builtUp: 1293, uds: 498.85 },
-      { no: '#402', floor: 'Fourth', builtUp: 1030, uds: 397.34 },
-      { no: '#501', floor: 'Fifth', builtUp: 1422, uds: 548.54 },
-      { no: '#502', floor: 'Fifth', builtUp: 901, uds: 347.58 },
     ]
   },
   {

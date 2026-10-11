@@ -1,0 +1,32 @@
+/* Responsive overrides for the Contact submission form. Inline styles set the
+   desktop layout, so these use !important to win over them on small screens. */
+
+@media (max-width: 768px) {
+  .contact {
+    background: #F7FAFA !important;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+    margin-top: 2.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding: 70px 0 32px !important;
+  }
+
+  .contact-grid {
+    gap: 2.5rem !important;
+    margin-top: 2rem !important;
+  }
+
+  /* Prevent iOS zoom-on-focus by keeping inputs at >=16px */
+  .contact-grid input,
+  .contact-grid textarea {
+    font-size: 16px !important;
+    padding: 0.9rem 1.1rem !important;
+  }
+}

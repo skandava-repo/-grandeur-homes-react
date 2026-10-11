@@ -236,28 +236,56 @@ const ProjectDetail = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="flats-grid">
-                  <table className="flats-table">
-                    <thead>
-                      <tr>
-                        <th>Flat No</th>
-                        <th>Floor</th>
-                        <th>Built-Up Area (Sq.ft)</th>
-                        <th>UDS (Sq.ft)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {project.flats.map((flat, i) => (
-                        <tr key={i}>
-                          <td className="flat-no-cell">{flat.no}</td>
-                          <td className="flat-floor-cell">{flat.floor}</td>
-                          <td>{flat.builtUp}</td>
-                          <td>{flat.uds}</td>
+                {project.status === 'Sold Out' ? (
+                  <div className="flats-sold-out">
+                    <span className="flats-sold-out-icon" aria-hidden="true">✦</span>
+                    <h4 className="flats-sold-out-title">All Flats Are Sold Out</h4>
+                    <p className="flats-sold-out-text">
+                      Every unit in this project has been sold. Explore our other
+                      projects for availability, or get in touch and we'll notify
+                      you about upcoming launches.
+                    </p>
+                    <div className="flats-sold-out-actions">
+                      <button
+                        className="cta-primary"
+                        onClick={() => {
+                          navigate('/')
+                          setTimeout(() => {
+                            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                          }, 100)
+                        }}
+                      >
+                        Enquiry
+                      </button>
+                      <button className="cta-secondary" onClick={() => navigate('/projects')}>
+                        ← All Projects
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flats-grid">
+                    <table className="flats-table">
+                      <thead>
+                        <tr>
+                          <th>Flat No</th>
+                          <th>Floor</th>
+                          <th>Built-Up Area (Sq.ft)</th>
+                          <th>UDS (Sq.ft)</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {project.flats.map((flat, i) => (
+                          <tr key={i}>
+                            <td className="flat-no-cell">{flat.no}</td>
+                            <td className="flat-floor-cell">{flat.floor}</td>
+                            <td>{flat.builtUp}</td>
+                            <td>{flat.uds}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

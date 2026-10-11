@@ -588,3 +588,31 @@
     font-size: 26px;
   }
 }
+
+@media (max-width: 480px) {
+  .jv-hero-premium {
+    padding: 48px 18px;
+    min-height: 90vh;
+  }
+
+  .jv-value-props {
+    padding: 56px 18px;
+  }
+
+  .jv-form-container {
+    padding: 32px 16px 80px;
+  }
+
+  .form-wrapper-premium {
+    padding: 32px 20px;
+  }
+
+  .premium-form {
+    gap: 24px;
+  }
+
+  .form-group-premium input[type="text"],
+  .form-group-premium input[type="tel"] {
+    padding: 14px 16px;
+  }
+}

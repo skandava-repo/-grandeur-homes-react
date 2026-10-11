@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { FiChevronDown } from 'react-icons/fi'
 import './WriteOn.css'
 
 const WriteOn = () => {
@@ -81,6 +82,11 @@ const WriteOn = () => {
       </div>
       <div className="writeon-line"></div>
       <p className="writeon-tagline">We Build Your Dreams</p>
+
+      <div className="writeon-scroll">
+        <span>Scroll Down</span>
+        <FiChevronDown className="writeon-scroll-arrow" />
+      </div>
     </section>
   )
 }

@@ -194,24 +194,49 @@
 @media (max-width: 768px) {
   .bs-container {
     flex-direction: column;
+    align-items: stretch;
   }
 
+  /* Keep the visual pinned to the top; it stays put while the right-panel
+     stages scroll past underneath, then releases so About can follow. */
   .bs-left-panel {
-    position: relative;
+    position: sticky;
+    top: 150px;
     width: 100%;
-    height: 50vh;
+    height: 45vh;
+    z-index: 2;
   }
 
   .bs-right-panel {
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
+  /* Each stage is one screen minus the pinned visual's height, so the
+     reader sees the building + one stage of text together. */
   .bs-section {
-    min-height: auto;
+    min-height: 55vh;
     padding: 40px 24px;
+    justify-content: flex-start;
   }
 
   .bs-section h2 {
     font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bs-left-panel {
+    height: 40vh;
+  }
+
+  .bs-section {
+    min-height: 60vh;
+    padding: 32px 18px;
+  }
+
+  .bs-section h2 {
+    font-size: 1.6rem;
   }
 }

@@ -39,11 +39,17 @@ function HomePage() {
 
 function AppContent() {
   const [scrolled, setScrolled] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const [mobileNavShown, setMobileNavShown] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > window.innerHeight * 0.5)
+      const past = window.scrollY > window.innerHeight * 0.5
+      setScrolled(past)
+      // On mobile, latch the nav visible once we scroll past WriteOn (the
+      // first full screen) into Hero — and keep it visible from then on.
+      if (past) setMobileNavShown(true)
     }
     
     handleScroll()
@@ -52,6 +58,20 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Track mobile/touch viewport so the nav can use the latched behavior there.
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)')
+    const update = () => setIsMobile(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
+
+  // Reset the mobile latch whenever we return to the top of a new route.
+  useEffect(() => {
+    setMobileNavShown(false)
+  }, [location.pathname])
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
@@ -59,6 +79,13 @@ function AppContent() {
   useEffect(() => {
     // Only enable section snap on home page
     if (location.pathname !== '/') return
+
+    // Disable the scroll hijack on touch devices / small screens so mobile
+    // uses native momentum scrolling instead of the programmatic snap.
+    const isTouchOrSmall =
+      window.matchMedia('(max-width: 768px)').matches ||
+      window.matchMedia('(pointer: coarse)').matches
+    if (isTouchOrSmall) return
 
     let isScrolling = false
     let scrollTimeout = null
@@ -231,7 +258,14 @@ function AppContent() {
 
   return (
     <div className="app">
-      <Navigation scrolled={scrolled || isProjectsPage || isJVPage} hidden={!scrolled && !isProjectsPage && !isJVPage} />
+      <Navigation
+        scrolled={scrolled || isProjectsPage || isJVPage || (isMobile && mobileNavShown)}
+        hidden={
+          isMobile
+            ? !mobileNavShown && !isProjectsPage && !isJVPage
+            : !scrolled && !isProjectsPage && !isJVPage
+        }
+      />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/projects" element={<Projects />} />
