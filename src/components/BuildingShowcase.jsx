@@ -223,7 +223,10 @@ const BuildingShowcase = () => {
   // column so the stage text doesn't jump when the panel leaves the flow.
   useEffect(() => {
     const mql = window.matchMedia('(max-width: 768px)')
-    const STICK_TOP = 0
+    // iOS needed the panel flush to the very top (0px); Android renders it
+    // fine with the original small gap, and 0px was cutting it off there.
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+    const STICK_TOP = isIOS ? 0 : 8
 
     const clearInlineStyles = () => {
       const panel = leftPanelRef.current

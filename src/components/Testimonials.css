@@ -341,10 +341,7 @@
   }
 
   .tm-left {
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid #eef4ee;
-    padding-bottom: 2rem;
+    display: none;
   }
 
   .tm-drum {
