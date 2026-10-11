@@ -134,6 +134,14 @@
   transition: all 0.3s ease;
 }
 
+/* Mobile drawer-only elements — hidden on desktop's horizontal nav row,
+   styled for real only inside the max-width:768px block below. */
+.nav-drawer-close,
+.nav-link-index,
+.nav-drawer-footer {
+  display: none;
+}
+
 @media (max-width: 768px) {
   /* On mobile the nav latches into its "scrolled" state permanently once
      you pass the first screen (see App.jsx mobileNavShown) and stays fixed
@@ -152,24 +160,142 @@
     padding: 0 2rem;
   }
 
+  /* Tapping anywhere on the body (outside the drawer) closes the mobile
+     menu — without this only the nav links themselves could close it.
+     Uses height:100vh rather than inset/bottom because .nav has a
+     transform (for iOS compositing), which makes it the containing block
+     for fixed descendants; vh is viewport-relative regardless. */
+  .nav-overlay {
+    display: none;
+  }
+
+  .nav-overlay.active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 1;
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
     right: -100%;
     height: 100vh;
-    width: 70%;
-    background: rgba(26, 29, 41, 0.98);
+    width: 80%;
+    max-width: 340px;
+    /* Bright theme: warm white with a soft brand-teal tint, instead of a
+       dark panel. */
+    background: linear-gradient(165deg, #ffffff 0%, #f3faf8 55%, #eaf5f1 100%);
     backdrop-filter: blur(10px);
     flex-direction: column;
-    padding: 6rem 2rem;
-    gap: 2rem;
-    transition: right 0.4s ease;
+    justify-content: center;
+    align-items: stretch;
+    padding: 6rem 2.5rem 3rem;
+    gap: 0;
+    transition: right 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 2;
+    box-shadow: -24px 0 60px rgba(28, 96, 96, 0.18);
   }
-  
+
   .nav-links.active {
     right: 0;
   }
-  
+
+  .nav-link-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.15rem 0;
+    border-bottom: 1px solid rgba(28, 96, 96, 0.14);
+  }
+
+  .nav-link-item:first-of-type {
+    border-top: 1px solid rgba(28, 96, 96, 0.14);
+  }
+
+  .nav-link-index {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1C6060;
+  }
+
+  .nav-links a {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: #16241f;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+  .nav-links a:active {
+    color: #1C6060;
+  }
+
+  .nav-drawer-close {
+    display: flex;
+    position: absolute;
+    top: 1.6rem;
+    right: 1.6rem;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(28, 96, 96, 0.08);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .nav-drawer-close span {
+    position: absolute;
+    width: 16px;
+    height: 1.5px;
+    background: #16241f;
+  }
+
+  .nav-drawer-close span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .nav-drawer-close span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .nav-drawer-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(28, 96, 96, 0.14);
+  }
+
+  .nav-drawer-phone {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1C6060;
+    text-decoration: none;
+  }
+
+  .nav-drawer-tagline {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: rgba(22, 36, 31, 0.55);
+  }
+
   .nav-toggle {
     display: flex;
   }

@@ -226,22 +226,30 @@
     height: 45vh;
     z-index: 2;
     overflow: visible;
+    /* The panel is an opaque fixed box, so an inner gradient alone can't
+       blend it into whatever scrolls up behind it — content just pops into
+       view the instant it crosses the box's edge. Masking the panel itself
+       to transparent near the bottom makes that edge dissolve instead of
+       cut. */
+    mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
   }
 
   /* Desktop's right-edge-only fade doesn't apply here (mobile has no
-     right-side text panel to blend into). */
+     right-side text panel to blend into). The mask above handles the
+     bottom; this handles left/right. */
   .bs-left-panel::before {
     background: none;
   }
 
-  /* Fade the bottom, left, and right edges into the white page background.
-     The top stays sharp — it's pinned flush against the viewport top, so
-     there's nothing above it to blend into. */
   .bs-left-panel::after {
     background:
-      linear-gradient(to right, #ffffff 0%, transparent 12%),
-      linear-gradient(to left, #ffffff 0%, transparent 12%),
-      linear-gradient(to top, #ffffff 0%, transparent 20%);
+      linear-gradient(to right, #ffffff 0%, transparent 22%),
+      linear-gradient(to left, #ffffff 0%, transparent 22%);
+  }
+
+  .bs-overlay {
+    display: none;
   }
 
   .bs-right-panel {

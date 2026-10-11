@@ -59,12 +59,32 @@ const Navigation = ({ scrolled, hidden }) => {
             <span className="logo-tagline">We Build Your Dreams</span>
           </span>
         </Link>
+        <div
+          className={`nav-overlay ${mobileOpen ? 'active' : ''}`}
+          onClick={() => setMobileOpen(false)}
+        />
         <ul className={`nav-links ${mobileOpen ? 'active' : ''}`}>
-          {navItems.map((item) => (
-            <li key={item.name}>
+          <li
+            className="nav-drawer-close"
+            onClick={() => setMobileOpen(false)}
+            role="button"
+            aria-label="Close menu"
+          >
+            <span></span>
+            <span></span>
+          </li>
+          {navItems.map((item, index) => (
+            <motion.li
+              key={item.name}
+              className="nav-link-item"
+              initial={false}
+              animate={mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 16 }}
+              transition={{ duration: 0.35, delay: mobileOpen ? index * 0.06 : 0 }}
+            >
+              <span className="nav-link-index">{String(index + 1).padStart(2, '0')}</span>
               {item.type === 'hash' ? (
-                <a 
-                  href={item.path} 
+                <a
+                  href={item.path}
                   onClick={(e) => {
                     e.preventDefault()
                     handleNavClick(item.path)
@@ -77,8 +97,12 @@ const Navigation = ({ scrolled, hidden }) => {
                   {item.name}
                 </Link>
               )}
-            </li>
+            </motion.li>
           ))}
+          <li className="nav-drawer-footer">
+            <a href="tel:+919489211111" className="nav-drawer-phone">+91 94892 11111</a>
+            <span className="nav-drawer-tagline">We Build Your Dreams</span>
+          </li>
         </ul>
         <button className="nav-toggle" onClick={() => setMobileOpen(!mobileOpen)}>
           <span></span>
