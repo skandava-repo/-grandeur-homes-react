@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -40,25 +40,51 @@ function HomePage() {
 function AppContent() {
   const [scrolled, setScrolled] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [mobileNavShown, setMobileNavShown] = useState(false)
+  const [mobileNavVisible, setMobileNavVisible] = useState(false)
+  const lastScrollYRef = useRef(0)
   const location = useLocation()
 
+  // Desktop nav background/visibility — unchanged from before.
   useEffect(() => {
     const handleScroll = () => {
       const past = window.scrollY > window.innerHeight * 0.5
       setScrolled(past)
-      // On mobile, latch the nav visible once we scroll past WriteOn (the
-      // first full screen) into Hero — and keep it visible from then on.
-      if (past) setMobileNavShown(true)
     }
-    
+
     handleScroll()
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Track mobile/touch viewport so the nav can use the latched behavior there.
+  // Mobile-only nav behavior: visible while within the Hero section; once
+  // scrolled past Hero's bottom edge it hides, and only reappears while the
+  // user is actively scrolling up (hides again on the next scroll-down).
+  useEffect(() => {
+    if (!isMobile) return
+
+    const handleMobileScroll = () => {
+      const scrollY = window.scrollY
+      const heroEl = document.getElementById('home')
+      const heroBottom = heroEl ? heroEl.offsetTop + heroEl.offsetHeight : window.innerHeight
+
+      if (scrollY <= heroBottom) {
+        setMobileNavVisible(true)
+      } else {
+        const scrollingUp = scrollY < lastScrollYRef.current
+        setMobileNavVisible(scrollingUp)
+      }
+      lastScrollYRef.current = scrollY
+    }
+
+    lastScrollYRef.current = window.scrollY
+    handleMobileScroll()
+
+    window.addEventListener('scroll', handleMobileScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleMobileScroll)
+  }, [isMobile, location.pathname])
+
+  // Track mobile/touch viewport so the nav can use the mobile-only behavior there.
   useEffect(() => {
     const mql = window.matchMedia('(max-width: 768px)')
     const update = () => setIsMobile(mql.matches)
@@ -67,9 +93,9 @@ function AppContent() {
     return () => mql.removeEventListener('change', update)
   }, [])
 
-  // Reset the mobile latch whenever we return to the top of a new route.
+  // Reset mobile nav visibility whenever we land on a new route.
   useEffect(() => {
-    setMobileNavShown(false)
+    setMobileNavVisible(false)
   }, [location.pathname])
 
   useEffect(() => {
@@ -259,10 +285,10 @@ function AppContent() {
   return (
     <div className="app">
       <Navigation
-        scrolled={scrolled || isProjectsPage || isJVPage || (isMobile && mobileNavShown)}
+        scrolled={scrolled || isProjectsPage || isJVPage || (isMobile && mobileNavVisible)}
         hidden={
           isMobile
-            ? !mobileNavShown && !isProjectsPage && !isJVPage
+            ? !mobileNavVisible && !isProjectsPage && !isJVPage
             : !scrolled && !isProjectsPage && !isJVPage
         }
       />

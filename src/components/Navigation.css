@@ -6,6 +6,12 @@
   z-index: 1000;
   padding: 0.9rem 0;
   transition: all 0.4s ease;
+  /* Forces its own compositing layer so iOS Safari doesn't mis-paint/flicker
+     this fixed bar against the sticky BuildingShowcase panel during
+     rubber-band/momentum scrolling. */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .nav.scrolled {
@@ -129,10 +135,23 @@
 }
 
 @media (max-width: 768px) {
+  /* On mobile the nav latches into its "scrolled" state permanently once
+     you pass the first screen (see App.jsx mobileNavShown) and stays fixed
+     on top of every section below. The desktop transparent-on-scroll look
+     only works over the hero image — once latched over stacked content
+     (e.g. BuildingShowcase stage badges) a transparent background lets
+     whatever is scrolling underneath show straight through the nav. Force
+     a solid, opaque bar on mobile so nothing bleeds through. */
+  .nav.scrolled {
+    background: #ffffff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  }
+
   .nav-container {
     padding: 0 2rem;
   }
-  
+
   .nav-links {
     position: fixed;
     top: 0;

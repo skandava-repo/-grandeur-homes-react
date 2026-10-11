@@ -41,6 +41,9 @@ const BuildingShowcase = () => {
   const canvasRef = useRef(null)
   const silkRef = useRef(null)
   const rightPanelRef = useRef(null)
+  const containerRef = useRef(null)
+  const leftPanelRef = useRef(null)
+  const spacerRef = useRef(null)
   const framesRef = useRef([])
   const currentFrameRef = useRef(0)
   const [loaded, setLoaded] = useState(false)
@@ -210,11 +213,78 @@ const BuildingShowcase = () => {
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize) }
   }, [])
 
+  // Mobile-only JS-driven pin for the left visual. iOS Safari has multiple
+  // undocumented ways native position:sticky silently breaks (an ancestor
+  // with non-visible overflow, overflow on the sticky element itself, flex
+  // containing-block quirks), so this bypasses position:sticky entirely on
+  // mobile and manually toggles fixed/absolute based on scroll position.
+  // Desktop is untouched — it keeps the native position:sticky from the
+  // base CSS rule. The spacer reserves the panel's height in the flex
+  // column so the stage text doesn't jump when the panel leaves the flow.
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)')
+    const STICK_TOP = 0
+
+    const clearInlineStyles = () => {
+      const panel = leftPanelRef.current
+      if (!panel) return
+      panel.style.position = ''
+      panel.style.top = ''
+      panel.style.bottom = ''
+      panel.style.left = ''
+      panel.style.width = ''
+    }
+
+    const update = () => {
+      const container = containerRef.current
+      const panel = leftPanelRef.current
+      if (!container || !panel) return
+
+      if (!mql.matches) {
+        clearInlineStyles()
+        return
+      }
+
+      const containerRect = container.getBoundingClientRect()
+      const panelHeight = panel.offsetHeight
+
+      panel.style.left = '0'
+      panel.style.width = '100%'
+
+      if (containerRect.top > STICK_TOP) {
+        panel.style.position = 'absolute'
+        panel.style.top = '0'
+        panel.style.bottom = ''
+      } else if (containerRect.bottom < panelHeight + STICK_TOP) {
+        panel.style.position = 'absolute'
+        panel.style.top = ''
+        panel.style.bottom = '0'
+      } else {
+        panel.style.position = 'fixed'
+        panel.style.top = `${STICK_TOP}px`
+        panel.style.bottom = ''
+      }
+    }
+
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    mql.addEventListener('change', update)
+
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+      mql.removeEventListener('change', update)
+      clearInlineStyles()
+    }
+  }, [])
+
   return (
     <section className="building-showcase" id="building">
       <div className="bs-progress-bar" style={{ width: `${percent}%` }} />
-      <div className="bs-container">
-        <div className="bs-left-panel">
+      <div className="bs-container" ref={containerRef}>
+        <div className="bs-left-spacer" ref={spacerRef} />
+        <div className="bs-left-panel" ref={leftPanelRef}>
           <canvas ref={canvasRef} className="bs-canvas" />
           {!loaded && (
             <div className="bs-loader">

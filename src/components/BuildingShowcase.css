@@ -19,6 +19,10 @@
   align-items: flex-start;
 }
 
+.bs-left-spacer {
+  display: none;
+}
+
 .bs-left-panel {
   position: sticky;
   top: 0;
@@ -195,16 +199,33 @@
   .bs-container {
     flex-direction: column;
     align-items: stretch;
+    /* Containing block for .bs-left-panel's JS-driven absolute states
+       (before the pin point, and after release near the bottom). */
+    position: relative;
   }
 
-  /* Keep the visual pinned to the top; it stays put while the right-panel
-     stages scroll past underneath, then releases so About can follow. */
+  /* Reserves the panel's height in the flex column. The panel itself is
+     taken out of flow by JS (position: fixed while pinned) — without this,
+     the stage text below would jump up to fill that space. */
+  .bs-left-spacer {
+    display: block;
+    width: 100%;
+    height: 45vh;
+    flex-shrink: 0;
+  }
+
+  /* Position (fixed/absolute/top/bottom) is driven imperatively from
+     BuildingShowcase.jsx on mobile — iOS Safari has multiple undocumented
+     ways native position:sticky silently breaks (ancestor overflow,
+     overflow on the sticky element itself, flex containing-block quirks),
+     so this bypasses position:sticky entirely rather than keep chasing
+     those. The canvas and overlay children already fill this box exactly,
+     so nothing here needs clipping. */
   .bs-left-panel {
-    position: sticky;
-    top: 150px;
     width: 100%;
     height: 45vh;
     z-index: 2;
+    overflow: visible;
   }
 
   .bs-right-panel {
@@ -227,6 +248,10 @@
 }
 
 @media (max-width: 480px) {
+  .bs-left-spacer {
+    height: 40vh;
+  }
+
   .bs-left-panel {
     height: 40vh;
   }

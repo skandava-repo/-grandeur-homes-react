@@ -8,11 +8,34 @@ gsap.registerPlugin(ScrollTrigger)
 
 const images = ['/hero-2.png', '/hero-5.png', '/hero-11.png', '/hero-10.png', '/villa.png', '/hero-skanda.png', '/hero-shannus.jpg', '/hero-saiaura.jpg', '/hero-lakshmi.png', '/hero-kamatchi.png']
 
+// Mobile-only hero: portrait marketing posters (property name/address baked
+// in), shown instead of the desktop carousel above. White House leads.
+const mobileImages = [
+  '/mobile-hero-white-house.jpg',
+  '/mobile-hero-lakshmi.jpg',
+  '/mobile-hero-villa.jpg',
+  '/mobile-hero-kamatchi.jpg',
+  '/mobile-hero-skanda.jpg',
+  '/mobile-hero-sri-sowbhaya.jpg',
+  '/mobile-hero-parimala.jpg',
+  '/mobile-hero-shannus.jpg',
+  '/mobile-hero-sai-aura.jpg',
+]
+
 const Hero = () => {
   const ref = useRef(null)
   const titleRef = useRef(null)
   const [currentImage, setCurrentImage] = useState(0)
-  
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)')
+    const update = () => setIsMobile(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start start', 'end start']
@@ -33,13 +56,18 @@ const Hero = () => {
   }, [])
 
   useEffect(() => {
+    setCurrentImage(0)
+  }, [isMobile])
+
+  useEffect(() => {
     if (!isVisible) return
+    const total = isMobile ? mobileImages.length : images.length
     const interval = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length)
+      setCurrentImage((prev) => (prev + 1) % total)
     }, 3500)
-    
+
     return () => clearInterval(interval)
-  }, [isVisible])
+  }, [isVisible, isMobile])
 
   useEffect(() => {
     const title = titleRef.current
@@ -76,25 +104,45 @@ const Hero = () => {
 
   return (
     <section className="hero" id="home" ref={ref}>
-      {currentImage === 0 ? (
-        <img 
+      {isMobile ? (
+        <img
+          key={`mobile-${currentImage}`}
+          src={mobileImages[currentImage]}
+          alt="Grandeur Homes"
+          className="hero-video hero-media hero-media-mobile"
+        />
+      ) : currentImage === 0 ? (
+        <img
           key="hero-main"
-          src="/hero-main.png" 
-          alt="Hero" 
+          src="/hero-main.png"
+          alt="Hero"
           className="hero-video hero-media"
         />
       ) : (
-        <img 
+        <img
           key={currentImage}
-          src={images[currentImage]} 
-          alt="Hero" 
+          src={images[currentImage]}
+          alt="Hero"
           className="hero-video hero-media"
         />
       )}
       <motion.div className="hero-bg" style={{ y }} />
 
       <motion.div className="hero-content" style={{ opacity }}>
-        {currentImage !== 0 && (
+        {/* The mobile posters already carry the logo, property name, address
+            and tagline baked into the image, so only the CTAs render here —
+            repeating the branding on top would duplicate it. */}
+        {isMobile ? (
+          <motion.div
+            className="hero-cta hero-cta-mobile"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <a href="#building" className="btn btn-primary">Explore Building</a>
+            <a href="#contact" className="btn btn-secondary">Schedule Consultation</a>
+          </motion.div>
+        ) : currentImage !== 0 && (
           <>
             <motion.img
               src="/logo.png"

@@ -130,16 +130,41 @@
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-cta {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn {
     width: 100%;
     max-width: 300px;
     text-align: center;
+  }
+
+  /* Mobile-only hero posters already carry the branding text, so just keep
+     them sharp and legible; a bottom gradient keeps the CTA buttons
+     readable over whatever part of the photo sits underneath them. */
+  .hero-media-mobile {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 32%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-cta-mobile {
+    position: relative;
+    z-index: 3;
   }
 }
 

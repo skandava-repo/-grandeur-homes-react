@@ -28,7 +28,12 @@ body {
   background: #FFFFFF;
   color: #000000;
   line-height: 1.6;
-  overflow-x: hidden;
+  /* Not overflow-x: hidden here — on iOS Safari, ANY ancestor with
+     non-visible overflow silently breaks `position: sticky` on
+     descendants (e.g. BuildingShowcase's pinned visual on mobile). The
+     sections that actually produce full-bleed decorative canvases
+     (JointDevelopment, Process, Testimonials) already contain their own
+     overflow locally, so this global rule was unnecessary. */
 }
 
 .app {

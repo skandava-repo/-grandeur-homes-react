@@ -1,6 +1,13 @@
 /* Responsive overrides for the Contact submission form. Inline styles set the
    desktop layout, so these use !important to win over them on small screens. */
 
+.contact {
+  /* Contains this section's own horizontal overflow locally instead of
+     relying on a global body rule (which breaks position:sticky on iOS
+     Safari elsewhere on the page). */
+  overflow-x: hidden;
+}
+
 @media (max-width: 768px) {
   .contact {
     background: #F7FAFA !important;
