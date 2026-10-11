@@ -1,14 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import './Navigation.css'
 
 const Navigation = ({ scrolled, hidden }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const isJVPage = location.pathname === '/jv'
   const isProjectsPage = location.pathname === '/projects'
+
+  // The drawer's stagger-in animation (links fading/sliding from opacity:0)
+  // must only run on mobile — mobileOpen is false by default everywhere,
+  // so without this check it set every desktop nav link to opacity:0 too.
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)')
+    const update = () => setIsMobile(mql.matches)
+    update()
+    mql.addEventListener('change', update)
+    return () => mql.removeEventListener('change', update)
+  }, [])
 
   const handleNavClick = (path) => {
     setMobileOpen(false)
@@ -78,8 +90,8 @@ const Navigation = ({ scrolled, hidden }) => {
               key={item.name}
               className="nav-link-item"
               initial={false}
-              animate={mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 16 }}
-              transition={{ duration: 0.35, delay: mobileOpen ? index * 0.06 : 0 }}
+              animate={!isMobile || mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 16 }}
+              transition={{ duration: 0.35, delay: isMobile && mobileOpen ? index * 0.06 : 0 }}
             >
               <span className="nav-link-index">{String(index + 1).padStart(2, '0')}</span>
               {item.type === 'hash' ? (
