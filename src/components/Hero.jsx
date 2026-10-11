@@ -140,7 +140,6 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <a href="#building" className="btn btn-primary">Explore Building</a>
-            <a href="#contact" className="btn btn-secondary">Schedule Consultation</a>
           </motion.div>
         ) : currentImage !== 0 && (
           <>

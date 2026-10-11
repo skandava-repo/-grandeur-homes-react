@@ -57,19 +57,19 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Mobile-only nav behavior: visible while within the Hero section; once
-  // scrolled past Hero's bottom edge it hides, and only reappears while the
-  // user is actively scrolling up (hides again on the next scroll-down).
+  // Mobile-only nav behavior: hidden at rest at the very top of Hero (the
+  // hero posters already carry the Grandeur Homes branding, so a header on
+  // top would duplicate it). Anywhere past that — including while still
+  // inside Hero — it shows while the user is actively scrolling up, and
+  // hides again on the next scroll-down.
   useEffect(() => {
     if (!isMobile) return
 
     const handleMobileScroll = () => {
       const scrollY = window.scrollY
-      const heroEl = document.getElementById('home')
-      const heroBottom = heroEl ? heroEl.offsetTop + heroEl.offsetHeight : window.innerHeight
 
-      if (scrollY <= heroBottom) {
-        setMobileNavVisible(true)
+      if (scrollY <= 10) {
+        setMobileNavVisible(false)
       } else {
         const scrollingUp = scrollY < lastScrollYRef.current
         setMobileNavVisible(scrollingUp)
