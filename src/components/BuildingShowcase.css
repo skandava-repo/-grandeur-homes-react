@@ -228,6 +228,22 @@
     overflow: visible;
   }
 
+  /* Desktop's right-edge-only fade doesn't apply here (mobile has no
+     right-side text panel to blend into). */
+  .bs-left-panel::before {
+    background: none;
+  }
+
+  /* Fade the bottom, left, and right edges into the white page background.
+     The top stays sharp — it's pinned flush against the viewport top, so
+     there's nothing above it to blend into. */
+  .bs-left-panel::after {
+    background:
+      linear-gradient(to right, #ffffff 0%, transparent 12%),
+      linear-gradient(to left, #ffffff 0%, transparent 12%),
+      linear-gradient(to top, #ffffff 0%, transparent 20%);
+  }
+
   .bs-right-panel {
     width: 100%;
     position: relative;
