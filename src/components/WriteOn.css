@@ -58,9 +58,12 @@
 .letter-inner {
   display: inline-block;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(42px, 7vw, 80px);
+  /* "Grandeur Homes Pvt. Ltd." is ~70% longer than the old "Grandeur
+     Homes" — sized down from the original clamp(42px,7vw,80px)/0.2em so
+     it still fits without the nowrap container clipping any letters. */
+  font-size: clamp(26px, 4.3vw, 50px);
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #2a2a2a;
   opacity: 0;
@@ -182,16 +185,16 @@
   }
 
   .letter-inner {
-    /* Scale with viewport so all 13 letters fit; ~6.2vw keeps
-       "GRANDEUR HOMES" within a ~360-412px wide screen. */
-    font-size: clamp(20px, 6.2vw, 42px);
-    letter-spacing: 0.08em;
+    /* Scaled down proportionally for the longer "Grandeur Homes Pvt.
+       Ltd." string (was 6.2vw/0.08em tuned for "GRANDEUR HOMES" alone). */
+    font-size: clamp(14px, 3.7vw, 26px);
+    letter-spacing: 0.03em;
   }
 }
 
 @media (max-width: 360px) {
   .letter-inner {
-    font-size: 5.8vw;
-    letter-spacing: 0.05em;
+    font-size: 3.4vw;
+    letter-spacing: 0.015em;
   }
 }
