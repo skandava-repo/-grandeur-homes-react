@@ -5,25 +5,26 @@ import './Contact.css'
 const Contact = () => {
   const [status, setStatus] = useState('')
 
-  const handleSubmit = async (e) => {
+  // Opens the visitor's own mail app with a message pre-addressed to
+  // info@grandeurhomes.in, pre-filled from the form fields, instead of
+  // posting through a third-party form service.
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setStatus('sending')
     const form = e.target
     const data = new FormData(form)
-    data.append('access_key', '10d46b60-5553-4515-9c6b-99fb71c24578')
+    const name = data.get('name')
+    const email = data.get('email')
+    const phone = data.get('phone')
+    const message = data.get('message')
 
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      body: data,
-    })
+    const subject = `New enquiry from Grandeur Homes website - ${name}`
+    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
 
-    if (res.ok) {
-      setStatus('success')
-      form.reset()
-      setTimeout(() => setStatus(''), 4000)
-    } else {
-      setStatus('error')
-    }
+    window.location.href = `mailto:info@grandeurhomes.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+    setStatus('success')
+    form.reset()
+    setTimeout(() => setStatus(''), 4000)
   }
 
   return (
@@ -40,16 +41,14 @@ const Contact = () => {
             viewport={{ once: true }}
             style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
           >
-            <input type="hidden" name="subject" value="New enquiry from Grandeur Homes website" />
             <input type="text" name="name" placeholder="Your Name" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <input type="email" name="email" placeholder="Email Address" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <input type="tel" name="phone" placeholder="Phone Number" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <textarea name="message" placeholder="Tell us about your project" rows="5" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', resize: 'vertical', outline: 'none' }} />
-            <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Sending...' : 'Send Message'}
+            <button type="submit" className="btn btn-primary">
+              Send Message
             </button>
-            {status === 'success' && <p style={{ color: '#2a6e3a', fontSize: '0.9rem' }}>✓ Message sent successfully! We'll get back to you soon.</p>}
-            {status === 'error' && <p style={{ color: '#c0392b', fontSize: '0.9rem' }}>Something went wrong. Please call us directly.</p>}
+            {status === 'success' && <p style={{ color: '#2a6e3a', fontSize: '0.9rem' }}>✓ Opening your email app, addressed to info@grandeurhomes.in...</p>}
           </motion.form>
           <motion.div
             initial={{ opacity: 0, x: 80 }}
@@ -60,11 +59,11 @@ const Contact = () => {
           >
             <div>
               <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-accent)', marginBottom: '1rem', fontSize: '1.2rem' }}>Office Address</h4>
-              <p style={{ color: 'var(--color-text-cream)', lineHeight: 1.8 }}>47, 22nd Street, Thillaiganga Nagar<br />Nanganallur, Chennai, Tamil Nadu 600061</p>
+              <p style={{ color: 'var(--color-text-cream)', lineHeight: 1.8 }}>GRANDEUR HOMES & DEVELOPERS Pvt. Ltd.<br />47, 22nd Street, Thillaiganga Nagar<br />Nanganallur, Chennai, Tamil Nadu 600061</p>
             </div>
             <div>
               <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-accent)', marginBottom: '1rem', fontSize: '1.2rem' }}>Contact</h4>
-              <p style={{ color: 'var(--color-text-cream)', lineHeight: 1.8 }}>Phone: +91 94892 11111<br />Landline: 044 4689 0796<br />Email: info@grandeurhomes.in</p>
+              <p style={{ color: 'var(--color-text-cream)', lineHeight: 1.8 }}>Phone: +91 94892 11111<br />Landline: 044 4689 0796<br />Email: <a href="mailto:info@grandeurhomes.in" style={{ color: 'var(--color-accent)' }}>info@grandeurhomes.in</a></p>
             </div>
             <div>
               <h4 style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-accent)', marginBottom: '1rem', fontSize: '1.2rem' }}>Follow Us</h4>

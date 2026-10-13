@@ -6,23 +6,23 @@ import './Hero.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const images = ['/hero-2.png', '/hero-5.png', '/hero-11.png', '/hero-10.png', '/villa.png', '/hero-skanda.png', '/hero-shannus.jpg', '/hero-saiaura.jpg', '/hero-lakshmi.png', '/hero-kamatchi.png']
+const images = ['/hero-2.png', '/hero-5.png', '/hero-11.png', '/hero-10.png', '/villa.png', '/hero-skanda.png', '/hero-shannus.jpg', '/hero-saiaura.jpg', '/hero-lakshmi.png', '/hero-kamakshi.jpg']
 
 // Mobile-only hero: portrait marketing posters (property name/address baked
 // in), shown instead of the desktop carousel above. White House leads.
 const mobileImages = [
+  '/mobile-hero-sai-aura.jpg',
   '/mobile-hero-white-house.jpg',
   '/mobile-hero-lakshmi.jpg',
   '/mobile-hero-villa.jpg',
-  '/mobile-hero-kamatchi.jpg',
+  '/mobile-hero-kamakshi.jpg',
   '/mobile-hero-skanda.jpg',
   '/mobile-hero-sri-sowbhaya.jpg',
   '/mobile-hero-parimala.jpg',
   '/mobile-hero-shannus.jpg',
-  '/mobile-hero-sai-aura.jpg',
 ]
 
-const Hero = () => {
+const Hero = ({ onFirstSlideChange }) => {
   const ref = useRef(null)
   const titleRef = useRef(null)
   const [currentImage, setCurrentImage] = useState(0)
@@ -54,6 +54,20 @@ const Hero = () => {
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [])
+
+  // The first slide (hero-saiaura.jpg, desktop only) needs an ivory header
+  // instead of the usual teal — report live to App.jsx so Navigation can
+  // switch color in sync with the carousel. Also false whenever Hero isn't
+  // visible — the carousel pauses off-screen (see isVisible above), which
+  // would otherwise freeze this flag at whatever it last was and leak
+  // ivory into every section after Hero.
+  useEffect(() => {
+    onFirstSlideChange?.(isVisible && !isMobile && currentImage === 0)
+  }, [currentImage, isMobile, isVisible, onFirstSlideChange])
+
+  useEffect(() => {
+    return () => onFirstSlideChange?.(false)
+  }, [onFirstSlideChange])
 
   useEffect(() => {
     setCurrentImage(0)
@@ -114,7 +128,7 @@ const Hero = () => {
       ) : currentImage === 0 ? (
         <img
           key="hero-main"
-          src="/hero-main.png"
+          src="/hero-saiaura.jpg"
           alt="Hero"
           className="hero-video hero-media"
         />
@@ -143,15 +157,6 @@ const Hero = () => {
           </motion.div>
         ) : currentImage !== 0 && (
           <>
-            <motion.img
-              src="/logo.png"
-              alt="Grandeur Homes"
-              className="hero-logo"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            />
-
             <div ref={titleRef}>
               <h1 className="hero-title">𝑮𝒓𝒂𝒏𝒅𝒆𝒖𝒓 𝑯𝒐𝒎𝒆𝒔</h1>
             </div>

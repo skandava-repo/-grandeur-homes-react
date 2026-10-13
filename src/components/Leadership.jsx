@@ -28,9 +28,9 @@ const Leadership = () => {
   return (
     <section className="leadership" style={{ background: 'var(--color-bg-dark)' }}>
       <div className="container">
-        <h2 className="section-title center" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Four Partners. One Unified Vision.</h2>
+        <h2 className="section-title center" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Four Founders. One Unified Vision.</h2>
         <p className="section-subtitle">
-          Our strength lies in the collective expertise of our four partners, each leading a critical vertical of the business.
+          Our strength lies in the collective expertise of our four founders, each leading a critical vertical of the business.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '2rem' }}>
           {partners.map((p, i) => (

@@ -12,7 +12,7 @@ const About = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Building Homes Across Tamil Nadu Since 2016</h2>
+            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Building Homes Across Chennai Since 2016</h2>
             <p style={{ color: 'var(--color-text-cream)', marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: 1.8 }}>
               Grandeur Homes is a trusted name in residential construction across Chennai and Tamil Nadu. Since 2016, we have successfully completed 15 projects, delivering quality apartments in prime localities including Nanganallur, Royapettah, and Adambakkam.
             </p>

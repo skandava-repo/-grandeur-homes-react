@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import './Navigation.css'
 
-const Navigation = ({ scrolled, hidden }) => {
+const Navigation = ({ scrolled, hidden, heroIvory }) => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const navigate = useNavigate()
@@ -58,7 +58,7 @@ const Navigation = ({ scrolled, hidden }) => {
 
   return (
     <motion.nav 
-      className={`nav ${scrolled ? 'scrolled' : ''} ${isJVPage ? 'jv-theme' : ''} ${isProjectsPage ? 'projects-theme' : ''} ${hidden ? 'nav-hidden' : ''}`}
+      className={`nav ${scrolled ? 'scrolled' : ''} ${isJVPage ? 'jv-theme' : ''} ${isProjectsPage ? 'projects-theme' : ''} ${hidden ? 'nav-hidden' : ''} ${heroIvory ? 'hero-ivory' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -67,7 +67,7 @@ const Navigation = ({ scrolled, hidden }) => {
         <Link to="/" className="logo-container">
           <img src="/logo.png" alt="Grandeur Homes" className="logo" />
           <span className="logo-text-group">
-            <span className="logo-text">GRANDEUR HOMES</span>
+            <span className="logo-text">GRANDEUR HOMES Pvt. Ltd.</span>
             <span className="logo-tagline">We Build Your Dreams</span>
           </span>
         </Link>

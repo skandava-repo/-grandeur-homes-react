@@ -51,13 +51,6 @@
   left: 0;
 }
 
-.hero-logo {
-  height: 64px;
-  width: auto;
-  margin-bottom: 1.2rem;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.35));
-}
-
 .hero-tagline {
   font-family: 'Playfair Display', 'Georgia', serif;
   font-style: italic;
@@ -177,11 +170,6 @@
   .hero-title {
     font-size: 2rem;
     letter-spacing: 1px;
-  }
-
-  .hero-logo {
-    height: 48px;
-    margin-bottom: 0.9rem;
   }
 
   .hero-subtitle {

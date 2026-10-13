@@ -34,6 +34,26 @@
   background: #1C6060;
 }
 
+/* Hero's first slide (hero-saiaura.jpg, desktop only) is a dark/warm dusk
+   photo where the usual teal header text loses contrast — Hero reports
+   live via App.jsx whenever its carousel is on that slide AND Hero is
+   actually on screen (see Hero.jsx), so this never leaks into later
+   sections even though "scrolled" alone would already be true while still
+   inside Hero (it's 100vh, taller than the 50%-viewport scrolled threshold). */
+.nav.hero-ivory .logo-text,
+.nav.hero-ivory .logo-tagline,
+.nav.hero-ivory .nav-links a {
+  color: #F8F6F0;
+}
+
+.nav.hero-ivory .nav-links a:hover {
+  color: #ffffff;
+}
+
+.nav.hero-ivory .nav-links a::after {
+  background: #F8F6F0;
+}
+
 .nav-container {
   max-width: 1440px;
   margin: 0 auto;
@@ -158,6 +178,13 @@
 
   .nav-container {
     padding: 0 2rem;
+  }
+
+  /* "GRANDEUR HOMES Pvt. Ltd." is longer than the old "GRANDEUR HOMES" —
+     shrink slightly on mobile so it doesn't wrap or crowd the hamburger. */
+  .logo-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
   }
 
   /* Tapping anywhere on the body (outside the drawer) closes the mobile

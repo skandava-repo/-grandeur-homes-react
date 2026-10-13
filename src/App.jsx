@@ -21,11 +21,11 @@ import './App.css'
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
-function HomePage() {
+function HomePage({ onHeroSlideChange }) {
   return (
     <>
       <WriteOn />
-      <Hero />
+      <Hero onFirstSlideChange={onHeroSlideChange} />
       <BuildingShowcase />
       <About />
       <Leadership />
@@ -41,6 +41,10 @@ function AppContent() {
   const [scrolled, setScrolled] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [mobileNavVisible, setMobileNavVisible] = useState(false)
+  // Hero's first slide (hero-saiaura.jpg, desktop only) needs an ivory
+  // header instead of the usual teal — Hero reports live via this callback
+  // whenever its carousel moves on/off that slide.
+  const [heroIvorySlide, setHeroIvorySlide] = useState(true)
   const lastScrollYRef = useRef(0)
   const location = useLocation()
 
@@ -291,9 +295,10 @@ function AppContent() {
             ? !mobileNavVisible && !isProjectsPage && !isJVPage
             : !scrolled && !isProjectsPage && !isJVPage
         }
+        heroIvory={location.pathname === '/' && heroIvorySlide}
       />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage onHeroSlideChange={setHeroIvorySlide} />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/jv" element={<JointDevelopment />} />
