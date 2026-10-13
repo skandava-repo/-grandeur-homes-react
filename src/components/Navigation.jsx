@@ -67,7 +67,7 @@ const Navigation = ({ scrolled, hidden, heroIvory }) => {
         <Link to="/" className="logo-container">
           <img src="/logo.png" alt="Grandeur Homes" className="logo" />
           <span className="logo-text-group">
-            <span className="logo-text">GRANDEUR HOMES Pvt. Ltd.</span>
+            <span className="logo-text">GRANDEUR HOMES</span>
             <span className="logo-tagline">We Build Your Dreams</span>
           </span>
         </Link>

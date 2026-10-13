@@ -180,13 +180,6 @@
     padding: 0 2rem;
   }
 
-  /* "GRANDEUR HOMES Pvt. Ltd." is longer than the old "GRANDEUR HOMES" —
-     shrink slightly on mobile so it doesn't wrap or crowd the hamburger. */
-  .logo-text {
-    font-size: 1rem;
-    letter-spacing: 1px;
-  }
-
   /* Tapping anywhere on the body (outside the drawer) closes the mobile
      menu — without this only the nav links themselves could close it.
      Uses height:100vh rather than inset/bottom because .nav has a

@@ -67,7 +67,7 @@ const WriteOn = () => {
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize) }
   }, [])
 
-  const text = 'Grandeur Homes Pvt. Ltd.'
+  const text = 'Grandeur Homes'
 
   return (
     <section className="writeon-section">
