@@ -5,26 +5,25 @@ import './Contact.css'
 const Contact = () => {
   const [status, setStatus] = useState('')
 
-  // Opens the visitor's own mail app with a message pre-addressed to
-  // info@grandeurhomes.in, pre-filled from the form fields, instead of
-  // posting through a third-party form service.
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setStatus('sending')
     const form = e.target
     const data = new FormData(form)
-    const name = data.get('name')
-    const email = data.get('email')
-    const phone = data.get('phone')
-    const message = data.get('message')
+    data.append('access_key', '10d46b60-5553-4515-9c6b-99fb71c24578')
 
-    const subject = `New enquiry from Grandeur Homes website - ${name}`
-    const body = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data,
+    })
 
-    window.location.href = `mailto:info@grandeurhomes.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-
-    setStatus('success')
-    form.reset()
-    setTimeout(() => setStatus(''), 4000)
+    if (res.ok) {
+      setStatus('success')
+      form.reset()
+      setTimeout(() => setStatus(''), 4000)
+    } else {
+      setStatus('error')
+    }
   }
 
   return (
@@ -41,14 +40,16 @@ const Contact = () => {
             viewport={{ once: true }}
             style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
           >
+            <input type="hidden" name="subject" value="New enquiry from Grandeur Homes website" />
             <input type="text" name="name" placeholder="Your Name" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <input type="email" name="email" placeholder="Email Address" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <input type="tel" name="phone" placeholder="Phone Number" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', outline: 'none' }} />
             <textarea name="message" placeholder="Tell us about your project" rows="5" required style={{ padding: '1rem 1.5rem', background: '#f5f7f5', border: '1px solid #e0e8e0', borderRadius: '4px', color: '#1a1a1a', fontSize: '1rem', resize: 'vertical', outline: 'none' }} />
-            <button type="submit" className="btn btn-primary">
-              Send Message
+            <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending...' : 'Send Message'}
             </button>
-            {status === 'success' && <p style={{ color: '#2a6e3a', fontSize: '0.9rem' }}>✓ Opening your email app, addressed to info@grandeurhomes.in...</p>}
+            {status === 'success' && <p style={{ color: '#2a6e3a', fontSize: '0.9rem' }}>✓ Message sent successfully! We'll get back to you soon.</p>}
+            {status === 'error' && <p style={{ color: '#c0392b', fontSize: '0.9rem' }}>Something went wrong. Please call us directly.</p>}
           </motion.form>
           <motion.div
             initial={{ opacity: 0, x: 80 }}
